@@ -1,0 +1,43 @@
+# Default configuration for anomaly detection
+data:
+  n_samples: 1000
+  anomaly_rate: 0.05
+  include_equipment: true
+  include_seasonality: true
+  include_trend: true
+  random_state: 42
+
+model:
+  algorithm: isolation_forest
+  contamination: 0.05
+  random_state: 42
+  
+  # Algorithm-specific parameters
+  isolation_forest:
+    n_estimators: 100
+    max_samples: "auto"
+    
+  one_class_svm:
+    kernel: "rbf"
+    gamma: "scale"
+    nu: 0.1
+    
+  lof:
+    n_neighbors: 20
+    algorithm: "auto"
+
+evaluation:
+  metrics: [precision_at_k, aucpr, alert_workload, f1_score, precision, recall]
+  k_values: [10, 50, 100]
+  cost_false_positive: 10.0
+  cost_false_negative: 100.0
+
+visualization:
+  figsize: [12, 8]
+  save_plots: true
+  plot_format: "png"
+  dpi: 300
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
